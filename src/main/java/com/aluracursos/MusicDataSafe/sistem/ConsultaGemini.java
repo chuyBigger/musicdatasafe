@@ -6,9 +6,9 @@ import com.google.genai.types.GenerateContentResponse;
 
 public class ConsultaGemini {
 
-    public String consultaMusicaGemini(String data, String detalleBusqueda) {
+    public String consultaMusicaGemini(String data, String detalleBusqueda, String solicitud) {
         String modelo = "gemini-2.0-flash-lite";
-        String prompt = "Devuélveme un JSON con la información de la canción solicitada. " +
+        String prompt = "Devuélveme un JSON con la información "+ solicitud +
                 "Incluye los campos: " + data +      // aqui hay que agregar los datos a buscar en el json dependiendo de la busqueda
                 detalleBusqueda +                    // aqui va el prompot de busqueda
                 "Solo responde con el JSON, sin texto adicional.";

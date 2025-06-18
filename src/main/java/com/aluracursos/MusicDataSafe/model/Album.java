@@ -1,28 +1,39 @@
 package com.aluracursos.MusicDataSafe.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
+@Table(name = "albums")
 public class Album {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String titulo;
-    private List<Artista> artista;
+    @ManyToOne
+    private List<String> artista;
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+    private List<String> canciones;
     private LocalDate fechaDeLanzamiento;
     private String genero;
     private Integer totalDeDuracion;
-    private Integer totalDeCaciones;
+    private Integer totalDeCanciones;
 
     public Album(){}
 
-    public Album(Long id, String titulo, List<Artista> artista, LocalDate fechaDeLanzamiento, String genero, Integer totalDeDuracion, Integer totalDeCaciones) {
+    public Album(Long id, String titulo, List<String> artista, List<String> canciones, LocalDate fechaDeLanzamiento, String genero, Integer totalDeDuracion, Integer totalDeCanciones) {
         this.id = id;
         this.titulo = titulo;
         this.artista = artista;
+        this.canciones = canciones;
         this.fechaDeLanzamiento = fechaDeLanzamiento;
         this.genero = genero;
         this.totalDeDuracion = totalDeDuracion;
-        this.totalDeCaciones = totalDeCaciones;
+        this.totalDeCanciones = totalDeCanciones;
     }
 
 
@@ -42,12 +53,20 @@ public class Album {
         this.titulo = titulo;
     }
 
-    public List<Artista> getArtista() {
+    public List<String> getArtista() {
         return artista;
     }
 
-    public void setArtista(List<Artista> artista) {
+    public void setArtista(List<String> artista) {
         this.artista = artista;
+    }
+
+    public List<String> getCanciones() {
+        return canciones;
+    }
+
+    public void setCanciones(List<String> canciones) {
+        this.canciones = canciones;
     }
 
     public LocalDate getFechaDeLanzamiento() {
@@ -74,12 +93,12 @@ public class Album {
         this.totalDeDuracion = totalDeDuracion;
     }
 
-    public Integer getTotalDeCaciones() {
-        return totalDeCaciones;
+    public Integer getTotalDeCanciones() {
+        return totalDeCanciones;
     }
 
-    public void setTotalDeCaciones(Integer totalDeCaciones) {
-        this.totalDeCaciones = totalDeCaciones;
+    public void setTotalDeCanciones(Integer totalDeCanciones) {
+        this.totalDeCanciones = totalDeCanciones;
     }
 
     @Override
@@ -88,10 +107,11 @@ public class Album {
                 "id=" + id +
                 ", titulo='" + titulo + '\'' +
                 ", artista='" + artista + '\'' +
+                ", canciones='" + canciones +
                 ", fechaDeLanzamiento=" + fechaDeLanzamiento +
                 ", genero='" + genero + '\'' +
                 ", totalDeDuracion=" + totalDeDuracion +
-                ", totalDeCaciones=" + totalDeCaciones +
+                ", totalDeCanciones=" + totalDeCanciones +
                 '}';
     }
 }

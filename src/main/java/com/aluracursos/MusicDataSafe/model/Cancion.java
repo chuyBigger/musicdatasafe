@@ -1,14 +1,22 @@
 package com.aluracursos.MusicDataSafe.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
+@Table(name = "canciones")
 public class Cancion {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+    @ManyToOne
     private String album;
     private Double duracion;
+    @ManyToMany
     private List<String> artista;
     private LocalDate fechaDeLanzamiento;
     private String posicionEnElAlbum;
