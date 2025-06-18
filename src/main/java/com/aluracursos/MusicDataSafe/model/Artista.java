@@ -7,6 +7,8 @@ public class Artista {
     private String miniImagen;
     private Integer totalDeAlbums;
 
+    public Artista(){}
+
     public Artista(Long id, String nombre, String miniImagen, Integer totalDeAlbums) {
         this.id = id;
         this.nombre = nombre;
@@ -55,4 +57,5 @@ public class Artista {
                 ", totalDeAlbums=" + totalDeAlbums +
                 '}';
     }
+
 }

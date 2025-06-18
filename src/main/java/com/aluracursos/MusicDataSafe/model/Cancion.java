@@ -1,29 +1,36 @@
 package com.aluracursos.MusicDataSafe.model;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class Cancion {
 
     private Long id;
     private String nombre;
-    private Album album;
-    private Integer duracion;
-    private String vistaPrevia;
-    private Artista contribuciones;
+    private String album;
+    private Double duracion;
+    private List<String> artista;
+    private LocalDate fechaDeLanzamiento;
+    private String posicionEnElAlbum;
 
-    public Cancion(Long id, String nombre, Artista artista, Album album, Integer duracion, String vistaPrevia) {
+    public Cancion(){}
+
+    public Cancion(Long id, String nombre, List<String> artista, String album, Double duracion, LocalDate fechaDeLanzamiento ,String posicionEnElAlbum) {
         this.id = id;
         this.nombre = nombre;
-        this.contribuciones = artista;
+        this.artista = artista;
         this.album = album;
         this.duracion = duracion;
-        this.vistaPrevia = vistaPrevia;
+        this.fechaDeLanzamiento = fechaDeLanzamiento;
+        this.posicionEnElAlbum = posicionEnElAlbum;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getNombre() {
@@ -34,19 +41,19 @@ public class Cancion {
         this.nombre = nombre;
     }
 
-    public Artista getArtista() {
-        return contribuciones;
+    public List<String> getArtista() {
+        return artista;
     }
 
-    public void setArtista(Artista artista) {
-        this.contribuciones = artista;
+    public void setArtista(List<String> artista) {
+        this.artista = artista;
     }
 
-    public Album getAlbum() {
+    public String getAlbum() {
         return album;
     }
 
-    public void setAlbum(Album album) {
+    public void setAlbum(String album) {
         this.album = album;
     }
 
@@ -54,16 +61,24 @@ public class Cancion {
         return duracion;
     }
 
-    public void setDuracion(Integer duracion) {
+    public void setDuracion(Double duracion) {
         this.duracion = duracion;
     }
 
-    public String getVistaPrevia() {
-        return vistaPrevia;
+    public LocalDate getFechaDeLanzamiento() {
+        return fechaDeLanzamiento;
     }
 
-    public void setVistaPrevia(String vistaPrevia) {
-        this.vistaPrevia = vistaPrevia;
+    public void setFechaDeLanzamiento(LocalDate fechaDeLanzamiento) {
+        this.fechaDeLanzamiento = fechaDeLanzamiento;
+    }
+
+    public String getPosicionEnElAlbum() {
+        return posicionEnElAlbum;
+    }
+
+    public void setPosicionEnElAlbum(String posicionEnElAlbum) {
+        this.posicionEnElAlbum = posicionEnElAlbum;
     }
 
     @Override
@@ -71,10 +86,10 @@ public class Cancion {
         return "Cancion{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", artista='" + contribuciones + '\'' +
+                ", artista=" + artista +
                 ", album='" + album + '\'' +
                 ", duracion=" + duracion +
-                ", vistaPrevia='" + vistaPrevia + '\'' +
+                ", posicionEnElAlbum" + posicionEnElAlbum + '\'' +
                 '}';
     }
 }

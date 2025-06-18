@@ -1,18 +1,21 @@
 package com.aluracursos.MusicDataSafe.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Album {
 
     private Long id;
     private String titulo;
-    private String artista;
+    private List<Artista> artista;
     private LocalDate fechaDeLanzamiento;
     private String genero;
     private Integer totalDeDuracion;
     private Integer totalDeCaciones;
 
-    public Album(Long id, String titulo, String artista, LocalDate fechaDeLanzamiento, String genero, Integer totalDeDuracion, Integer totalDeCaciones) {
+    public Album(){}
+
+    public Album(Long id, String titulo, List<Artista> artista, LocalDate fechaDeLanzamiento, String genero, Integer totalDeDuracion, Integer totalDeCaciones) {
         this.id = id;
         this.titulo = titulo;
         this.artista = artista;
@@ -39,11 +42,11 @@ public class Album {
         this.titulo = titulo;
     }
 
-    public String getArtista() {
+    public List<Artista> getArtista() {
         return artista;
     }
 
-    public void setArtista(String artista) {
+    public void setArtista(List<Artista> artista) {
         this.artista = artista;
     }
 
