@@ -13,20 +13,28 @@ public class Cancion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+
     @ManyToOne
-    private String album;
+    @JoinColumn(name = "album_id")
+    private Album album;
+
     private Double duracion;
     @ManyToMany
-    private List<String> artista;
+    @JoinTable(
+            name = "cancion_artista",
+            joinColumns = @JoinColumn(name = "cancion_id"),
+            inverseJoinColumns = @JoinColumn(name = "artista_id")
+    )
+    private List<Artista> artistas;
     private LocalDate fechaDeLanzamiento;
     private String posicionEnElAlbum;
 
     public Cancion(){}
 
-    public Cancion(Long id, String nombre, List<String> artista, String album, Double duracion, LocalDate fechaDeLanzamiento ,String posicionEnElAlbum) {
+    public Cancion(Long id, String nombre, List<Artista> artistas,Album album, Double duracion, LocalDate fechaDeLanzamiento ,String posicionEnElAlbum) {
         this.id = id;
         this.nombre = nombre;
-        this.artista = artista;
+        this.artistas = artistas;
         this.album = album;
         this.duracion = duracion;
         this.fechaDeLanzamiento = fechaDeLanzamiento;
@@ -49,23 +57,23 @@ public class Cancion {
         this.nombre = nombre;
     }
 
-    public List<String> getArtista() {
-        return artista;
+    public List<Artista> getArtistas() {
+        return artistas;
     }
 
-    public void setArtista(List<String> artista) {
-        this.artista = artista;
+    public void setArtistas(List<Artista> artistas) {
+        this.artistas = artistas;
     }
 
-    public String getAlbum() {
+    public Album getAlbum() {
         return album;
     }
 
-    public void setAlbum(String album) {
+    public void setAlbum(Album album) {
         this.album = album;
     }
 
-    public double getDuracion() {
+    public Double getDuracion() {
         return duracion;
     }
 
@@ -94,10 +102,11 @@ public class Cancion {
         return "Cancion{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", artista=" + artista +
-                ", album='" + album + '\'' +
+                ", artistas=" + (artistas != null ? artistas.stream().map(Artista::getNombre).toList() : "null") +
+                ", album='" + (album != null ? album.getTitulo() : "null") + '\'' +
                 ", duracion=" + duracion +
-                ", posicionEnElAlbum" + posicionEnElAlbum + '\'' +
+                ", posicionEnElAlbum='" + posicionEnElAlbum + '\'' +
                 '}';
     }
+
 }

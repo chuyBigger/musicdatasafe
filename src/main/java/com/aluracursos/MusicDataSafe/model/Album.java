@@ -14,10 +14,17 @@ public class Album {
     private Long id;
 
     private String titulo;
-    @ManyToOne
-    private List<String> artista;
+
+    @ManyToMany
+    @JoinTable(
+            name = "album_artista",
+            joinColumns = @JoinColumn(name = "album_id"),
+            inverseJoinColumns = @JoinColumn(name = "artista_id")
+    )
+    private List<Artista> artistas;
+
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
-    private List<String> canciones;
+    private List<Cancion> canciones;
     private LocalDate fechaDeLanzamiento;
     private String genero;
     private Integer totalDeDuracion;
@@ -25,10 +32,10 @@ public class Album {
 
     public Album(){}
 
-    public Album(Long id, String titulo, List<String> artista, List<String> canciones, LocalDate fechaDeLanzamiento, String genero, Integer totalDeDuracion, Integer totalDeCanciones) {
+    public Album(Long id, String titulo, List<Artista> artistas, List<Cancion> canciones, LocalDate fechaDeLanzamiento, String genero, Integer totalDeDuracion, Integer totalDeCanciones) {
         this.id = id;
         this.titulo = titulo;
-        this.artista = artista;
+        this.artistas = artistas;
         this.canciones = canciones;
         this.fechaDeLanzamiento = fechaDeLanzamiento;
         this.genero = genero;
@@ -53,19 +60,19 @@ public class Album {
         this.titulo = titulo;
     }
 
-    public List<String> getArtista() {
-        return artista;
+    public List<Artista> getArtistas() {
+        return artistas;
     }
 
-    public void setArtista(List<String> artista) {
-        this.artista = artista;
+    public void setArtistas(List<Artista> artistas) {
+        this.artistas = artistas;
     }
 
-    public List<String> getCanciones() {
+    public List<Cancion> getCanciones() {
         return canciones;
     }
 
-    public void setCanciones(List<String> canciones) {
+    public void setCanciones(List<Cancion> canciones) {
         this.canciones = canciones;
     }
 
@@ -101,18 +108,20 @@ public class Album {
         this.totalDeCanciones = totalDeCanciones;
     }
 
+
     @Override
     public String toString() {
         return "Album{" +
                 "id=" + id +
                 ", titulo='" + titulo + '\'' +
-                ", artista='" + artista + '\'' +
-                ", canciones='" + canciones +
+                ", artistas=" + (artistas != null ? artistas.stream().map(Artista::getNombre).toList() : "[]") +
+                ", canciones=" + (canciones != null ? canciones.stream().map(Cancion::getNombre).toList() : "[]") +
                 ", fechaDeLanzamiento=" + fechaDeLanzamiento +
                 ", genero='" + genero + '\'' +
                 ", totalDeDuracion=" + totalDeDuracion +
                 ", totalDeCanciones=" + totalDeCanciones +
                 '}';
     }
+
 }
 
