@@ -6,12 +6,32 @@ import com.google.genai.types.GenerateContentResponse;
 
 public class ConsultaGemini {
 
-    public String consultaMusicaGemini(String data, String detalleBusqueda, String solicitud) {
+    public String consultaMusicaGemini(String tipoBusqueda, String objetoBuscado) {
         String modelo = "gemini-2.0-flash-lite";
-        String prompt = "Devuélveme un JSON con la información "+ solicitud +
-                "Incluye los campos: " + data +      // aqui hay que agregar los datos a buscar en el json dependiendo de la busqueda
-                detalleBusqueda +                    // aqui va el prompot de busqueda
-                "Solo responde con el JSON, sin texto adicional.";
+        String prompt = "Devuélveme solo un objeto JSON con la información de una " + tipoBusqueda + ".\n" +
+                objetoBuscado +
+                "Los campos deben tener los siguientes tipos y estructuras:\n\n" +
+                "- nombre: tipo String\n" +
+                "- album: objeto con estos campos:\n" +
+                "    - titulo: String\n" +
+                "    - artistas: lista de objetos (ver estructura de 'artistas')\n" +
+                "    - canciones: lista de objetos con solo el campo 'nombre' (String)\n" +
+                "    - fechaDeLanzamiento: tipo LocalDate\n" +
+                "    - genero: String\n" +
+                "    - totalDeDuracion: Integer\n" +
+                "    - totalDeCanciones: Integer\n" +
+                "- duracion: tipo Double (en minutos)\n" +
+                "- artistas: lista de objetos con estos campos:\n" +
+                "    - nombre: String\n" +
+                "    - miniImagen: String\n" +
+                "    - totalDeAlbums: Integer\n" +
+                "- fechaDeLanzamiento: tipo LocalDate\n" +
+                "- posicionEnElAlbum: tipo Integer\n\n" +
+                "Devuelve únicamente el JSON. No incluyas texto explicativo ni comentarios. Como si respondieras desde una API.";
+//        String prompt = "Devuélveme un JSON con la información "+ solicitud +
+//                "Incluye los campos: " + data +      // aqui hay que agregar los datos a buscar en el json dependiendo de la busqueda
+//                detalleBusqueda +                    // aqui va el prompot de busqueda
+//                "Solo responde con el JSON, sin texto adicional.";
 
         String apiKey = System.getenv("API_KEY_GEMINI");
         Client cliente = new Client.Builder().apiKey(apiKey).build();
