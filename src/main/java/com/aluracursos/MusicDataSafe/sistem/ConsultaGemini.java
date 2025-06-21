@@ -4,10 +4,12 @@ import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
 
 
+
 public class ConsultaGemini {
 
+    String apiKey = System.getenv("API_KEY_GEMINI");
+
     public String consultaMusicaGemini(String tipoBusqueda, String objetoBuscado) {
-        String modelo = "gemini-2.0-flash-lite";
         String prompt = "Devuélveme solo un objeto JSON con la información de una " + tipoBusqueda + ".\n" +
                 objetoBuscado +
                 "Los campos deben tener los siguientes tipos y estructuras:\n\n" +
@@ -28,12 +30,17 @@ public class ConsultaGemini {
                 "- fechaDeLanzamiento: tipo LocalDate\n" +
                 "- posicionEnElAlbum: tipo Integer\n\n" +
                 "Devuelve únicamente el JSON. No incluyas texto explicativo ni comentarios. Como si respondieras desde una API.";
-//        String prompt = "Devuélveme un JSON con la información "+ solicitud +
-//                "Incluye los campos: " + data +      // aqui hay que agregar los datos a buscar en el json dependiendo de la busqueda
-//                detalleBusqueda +                    // aqui va el prompot de busqueda
-//                "Solo responde con el JSON, sin texto adicional.";
 
-        String apiKey = System.getenv("API_KEY_GEMINI");
+        return consultaGemini(prompt);
+
+    }
+    public String consultaLibreGemini(String consulta){
+        String prompt = consulta;
+        return consultaGemini(prompt);
+    }
+
+    private String consultaGemini(String prompt){
+        String modelo = "gemini-2.0-flash-lite";
         Client cliente = new Client.Builder().apiKey(apiKey).build();
         try {
             GenerateContentResponse respuesta = (cliente).models.generateContent(
@@ -48,7 +55,6 @@ public class ConsultaGemini {
             System.out.println("Error al llamar a la API de Gemini: " + e.getMessage());
         }
         return null;
-
     }
 
 }
